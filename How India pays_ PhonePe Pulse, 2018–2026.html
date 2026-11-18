@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How India pays: PhonePe Pulse, 2018–2026</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#f4f5fa;--card:#fff;--ink:#1b1840;--mut:#5d5a7e;--line:#dedcee;--acc:#e8590c;--b0:#e9e7fb;--b1:#c3bdf2;--b2:#8d83e0;--b3:#5a4cc4;--b4:#2f2386;--na:#e6e6ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12112a;--card:#1c1a3d;--ink:#eceafc;--mut:#a9a6d0;--line:#34316a;--acc:#ff8a47;--b0:#2a2760;--b1:#3b358f;--b2:#5d52c9;--b3:#8f86ee;--b4:#c9c4ff;--na:#2a2850}}
+:root[data-theme="dark"]{--bg:#12112a;--card:#1c1a3d;--ink:#eceafc;--mut:#a9a6d0;--line:#34316a;--acc:#ff8a47;--b0:#2a2760;--b1:#3b358f;--b2:#5d52c9;--b3:#8f86ee;--b4:#c9c4ff;--na:#2a2850}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Bricolage Grotesque",system-ui,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:28px 18px 48px}
+h1{font-size:clamp(28px,5vw,46px);line-height:1.08;margin:0 0 12px;font-weight:800;max-width:18em}
+.lede{max-width:40em;color:var(--mut);margin:0 0 24px;font-size:18px}
+.lede b{color:var(--acc);font-weight:800}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:22px}
+.k{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.k b{display:block;font-size:24px;font-weight:800}.k span{font-size:13px;color:var(--mut)}
+.ctl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px}
+label{font-size:14px;color:var(--mut);display:flex;flex-direction:column;gap:4px}
+select{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:230px}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.p{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+h2{font-size:19px;margin:0 0 4px}.sub{font-size:14px;color:var(--mut);margin:0 0 10px}
+svg{width:100%;height:auto;display:block}
+.t{cursor:pointer}.t rect{stroke:var(--card);stroke-width:2}.t:focus{outline:none}.t:focus rect,.t.sel rect{stroke:var(--acc);stroke-width:3.5}
+.t text{font-size:13px;font-weight:600;pointer-events:none}
+.lg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mut);margin-top:6px}
+.lg i{width:26px;height:10px;display:inline-block}
+.row{display:grid;grid-template-columns:130px 1fr 78px;gap:8px;align-items:center;font-size:14px;margin:5px 0}
+.bar{height:14px;background:var(--b3);border-radius:3px}
+.det{font-size:16px;line-height:1.6}.det b{font-weight:800}
+.ins{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ins div{border-left:4px solid var(--acc);padding:2px 0 2px 12px}.ins b{display:block;font-size:17px}
+.ins p{margin:4px 0 0;color:var(--mut);font-size:15px}
+footer{font-size:13px;color:var(--mut);max-width:50em;margin-top:8px}
+@media(prefers-reduced-motion:no-preference){.bar{transition:width .35s}}
+</style></head><body><main>
+<h1>How India pays: eight years of PhonePe, state by state</h1>
+<p class="lede">In 2025, people paid through PhonePe roughly <b>352 million times a day</b>. Choose a measure, pick a year, and click any state to see the story behind its number.</p>
+<div class="kpis" id="kpis"></div>
+<div class="ctl">
+<label>What do you want to see?<select id="m"></select></label>
+<label>Year<select id="y"></select></label>
+</div>
+<div class="grid">
+<section class="p"><h2 id="mt"></h2><p class="sub" id="ms"></p>
+<svg id="map" viewBox="0 0 540 480" role="group" aria-label="Tile map of Indian states and union territories"></svg>
+<div class="lg">Lower<i style="background:var(--b0)"></i><i style="background:var(--b1)"></i><i style="background:var(--b2)"></i><i style="background:var(--b3)"></i><i style="background:var(--b4)"></i>Higher<i style="background:var(--na);margin-left:10px"></i>No data</div></section>
+<div><section class="p"><h2 id="dt"></h2><p class="det" id="dp"></p><svg id="spark" viewBox="0 0 400 90"></svg></section>
+<section class="p"><h2>Top 10 right now</h2><div id="rank"></div></section></div>
+</div>
+<section class="p"><h2>Payments per quarter, nationwide</h2><p class="sub">Every bar is one quarter, in billions of payments. The highlighted bars belong to the year you picked.</p><svg id="trend" viewBox="0 0 1000 230"></svg></section>
+<section class="p"><h2>What stood out</h2><div class="ins">
+<div><b>Half the volume, five states</b><p>Maharashtra, Karnataka, Telangana, Uttar Pradesh and Andhra Pradesh made 52% of all 2025 payments.</p></div>
+<div><b>The next wave is in the east and north-east</b><p>Assam grew 52% in 2025, Arunachal Pradesh 49% and West Bengal 41%, while Karnataka grew 23% and Rajasthan 20%.</p></div>
+<div><b>Payments got smaller, and more everyday</b><p>The average payment fell from ₹1,467 in 2018 to ₹1,209 in 2025. Shop and merchant payments grew from 49% to 62% of volume; person-to-person fell from 47% to 32%.</p></div>
+<div><b>Same app, very different habits</b><p>Telangana averaged about 365 payments per registered user in 2025. Kerala managed 66 and Manipur 46. Users are counted where they registered, so read this as a habit signal, not a precise rate.</p></div>
+</div></section>
+<footer>Source: PhonePe Pulse open data (github.com/PhonePe/pulse), state-level quarterly files, Q1 2018 to Q2 2026. Years shown are full calendar years (2026 has only two quarters so far, and appears in the quarterly chart only). Users are registered users at the end of Q4. Value is in ₹ crore; 1 lakh crore = ₹1 trillion. Growth uses year-over-year change and compound annual growth rate (CAGR).</footer>
+</main>
+<script>
+const D={"Y":[2018,2019,2020,2021,2022,2023,2024,2025],"st":{"andaman & nicobar islands":[[0.08,0.17,0.54,2.08,6.56,12.6,20.5,27.05],[0.2,0.6,1.5,5.6,13.7,21.9,31.2,37.2],[20,34,62,94,128,155,185,209]],"andhra pradesh":[[90.55,365.02,912.94,1940.32,3552.74,5489.71,8049.44,10516.84],[138.6,674.2,2055.2,4365.8,7347.2,10227.9,12886.2,15263.1],[6135,10529,15264,19405,23103,26161,29498,32906]],"arunachal pradesh":[[0.54,1.71,4.22,8.97,22.35,47.65,88.29,132.0],[1.3,4.8,12.0,25.8,50.3,83.6,123.4,160.7],[72,147,257,353,465,585,743,866]],"assam":[[10.32,23.48,46.45,103.66,296.25,617.45,1128.05,1717.33],[15.2,46.2,101.2,238.0,560.5,977.0,1382.0,1806.0],[1201,2240,3615,5100,6999,9011,11342,13283]],"bihar":[[52.53,128.45,268.49,661.03,1507.0,2939.15,5322.26,7151.04],[79.0,258.6,651.8,1505.7,2978.5,4847.7,7379.9,9013.1],[4894,8558,13128,17989,23466,29114,35663,42344]],"chandigarh":[[1.56,5.05,7.27,16.44,32.71,49.49,66.71,84.96],[3.4,9.8,14.1,26.6,44.6,61.2,74.9,88.7],[176,292,397,488,570,639,721,794]],"chhattisgarh":[[16.55,47.77,108.19,277.81,623.72,1070.99,1722.32,2202.4],[25.6,82.1,192.0,455.6,904.8,1384.5,2029.7,2389.3],[1584,2781,4302,5951,7618,9161,10962,12478]],"dadra & nagar haveli & daman & diu":[[1.2,3.1,5.64,14.13,33.37,57.56,94.69,119.32],[1.8,5.0,8.8,19.3,37.4,57.0,81.7,96.4],[102,175,264,349,431,503,579,647]],"delhi":[[49.18,198.2,292.48,594.55,1204.98,2028.6,3177.81,4092.65],[72.6,273.4,489.8,1008.4,1882.5,2780.5,3748.5,4416.0],[4336,6976,9362,11797,14082,16011,18256,20229]],"goa":[[1.4,5.19,10.33,30.4,70.95,112.28,155.61,194.07],[2.9,10.5,18.5,50.3,106.1,155.7,195.6,232.3],[204,370,554,720,872,1002,1152,1289]],"gujarat":[[43.76,132.53,227.92,503.92,1072.28,1822.44,2911.06,3915.32],[66.6,211.9,408.1,939.4,1840.9,2770.2,3852.5,4575.6],[5796,9740,14184,18431,22609,26346,30456,34133]],"haryana":[[35.47,134.81,256.54,568.66,1164.15,1898.68,2987.9,3836.14],[65.6,235.0,488.0,1015.9,1876.2,2722.1,3684.2,4431.8],[3994,6643,9406,12047,14568,16779,19314,21615]],"himachal pradesh":[[3.75,11.3,22.61,45.84,90.79,140.9,199.66,244.8],[6.4,20.6,40.3,79.5,134.9,177.6,229.8,267.6],[537,1006,1535,1950,2335,2677,3099,3444]],"jammu & kashmir":[[4.29,5.17,12.29,42.18,109.88,242.48,438.44,612.87],[7.0,13.1,34.4,85.9,183.0,317.4,531.0,682.1],[602,934,1396,2040,2801,3589,4517,5206]],"jharkhand":[[22.83,59.03,117.97,303.31,687.14,1235.96,2041.36,2699.64],[30.1,92.3,219.1,530.0,1073.3,1712.3,2493.8,3105.0],[1955,3397,5080,6872,8762,10618,12848,14936]],"karnataka":[[93.48,630.23,1220.68,2597.76,5434.12,8793.13,12532.81,15377.21],[160.1,812.8,1821.6,3888.4,7595.7,11484.7,15348.5,17951.7],[8477,15440,22376,29181,35452,40601,45668,50340]],"kerala":[[11.68,36.88,87.83,234.33,483.98,659.38,826.4,1027.41],[19.2,62.9,145.6,365.3,664.2,852.1,1004.5,1192.6],[1713,3357,6108,8323,10342,11985,13798,15459]],"ladakh":[[0.1,0.4,1.04,2.84,6.7,12.87,21.64,27.61],[0.3,1.5,3.7,9.3,18.3,28.6,41.0,46.7],[36,62,90,118,146,173,206,232]],"lakshadweep":[[0.01,0.02,0.05,0.09,0.14,0.25,0.69,1.19],[0.0,0.1,0.1,0.3,0.4,0.6,0.9,1.2],[2,4,6,8,10,12,15,17]],"madhya pradesh":[[60.73,206.07,409.7,998.47,2114.38,3647.84,5931.95,7642.18],[87.0,304.9,741.1,1711.2,3204.9,4917.0,7164.2,8631.9],[5311,9220,13926,18847,23794,28704,33718,38249]],"maharashtra":[[113.98,518.44,1070.43,2577.21,5483.81,8758.96,12808.96,16864.74],[182.1,709.5,1605.2,3744.1,7292.8,10827.3,14799.9,18252.0],[13355,23734,34405,44928,54629,62582,72021,80322]],"manipur":[[0.79,1.61,3.72,6.14,10.9,8.24,20.85,36.0],[1.6,4.4,10.2,19.0,30.7,23.9,44.3,61.9],[94,170,306,388,467,529,668,784]],"meghalaya":[[0.44,1.21,2.6,4.93,11.36,22.32,45.33,72.58],[0.8,2.6,5.6,12.1,27.0,44.9,66.8,95.3],[57,113,198,268,353,450,611,743]],"mizoram":[[0.17,0.44,1.04,1.97,3.3,5.35,8.84,14.67],[0.5,1.4,3.0,6.0,9.6,13.1,16.0,20.5],[22,45,87,117,146,179,258,312]],"nagaland":[[0.43,1.19,2.69,4.67,8.66,13.46,25.39,40.23],[1.0,3.3,7.5,14.6,25.4,35.1,47.7,59.5],[45,96,194,251,312,370,475,555]],"odisha":[[74.1,173.76,268.73,648.95,1397.67,2371.48,3968.83,5147.63],[68.5,220.5,494.0,1145.0,2179.6,3374.0,4800.7,5674.3],[3566,6075,8593,11358,13990,16349,19086,21533]],"puducherry":[[0.74,2.93,6.44,15.89,32.44,46.95,60.33,72.37],[1.5,5.5,11.4,25.9,47.6,63.0,74.7,85.0],[106,199,312,411,493,561,629,693]],"punjab":[[14.45,41.75,71.38,146.2,305.11,493.46,704.36,923.15],[28.0,86.4,157.4,308.5,569.1,807.5,1015.9,1251.0],[1951,3442,5310,6815,8329,9790,11623,13173]],"rajasthan":[[61.98,247.45,525.8,1309.65,2714.24,4580.2,7392.75,8898.9],[99.0,414.1,1018.9,2457.0,4637.0,7115.2,10108.4,11419.3],[6407,11034,16423,22033,27183,32021,37076,41560]],"sikkim":[[0.45,1.27,2.42,4.74,10.44,17.42,29.72,45.01],[0.9,3.0,5.9,12.3,23.2,31.8,43.9,55.3],[54,100,158,206,252,293,345,391]],"tamil nadu":[[39.99,150.97,298.15,697.99,1455.14,2128.74,2954.91,3692.22],[79.9,277.7,541.4,1231.6,2366.0,3215.6,4049.9,4683.3],[5262,9717,15496,20871,25708,30003,34331,38313]],"telangana":[[71.23,412.89,844.97,2088.68,4273.47,6936.54,10006.2,12716.11],[122.8,659.2,1673.4,3998.2,7508.5,11055.8,14078.0,16919.6],[6688,11331,15892,20513,24652,27926,31420,34808]],"tripura":[[1.43,3.41,6.03,10.32,20.61,36.42,55.68,79.08],[1.7,5.2,11.3,21.2,39.8,61.8,79.9,99.4],[155,283,431,544,669,809,995,1152]],"uttar pradesh":[[104.76,305.68,551.58,1252.55,2842.67,5170.6,8766.47,11694.7],[146.1,481.4,1040.5,2350.5,4777.1,7599.1,11116.0,13570.5],[10830,18920,28546,38740,50214,61516,74136,85800]],"uttarakhand":[[9.56,28.15,50.7,117.45,249.24,410.33,613.95,779.39],[15.1,46.7,89.1,188.5,352.0,517.3,698.8,827.6],[1050,1825,2685,3503,4297,4999,5802,6515]],"west bengal":[[114.52,238.68,302.79,619.41,1307.48,2416.08,4153.28,5845.21],[94.5,247.0,532.5,1228.1,2563.3,4237.8,6387.8,7913.4],[6252,10931,15871,20724,25740,30766,36469,41514]]},"nat":[[140.0,173],[193.6,305],[347.0,476],[428.4,673],[720.3,992],[827.7,1357],[1105.9,1676],[1470.5,2263],[1632.7,2700],[1460.1,2649],[2048.0,3906],[2881.9,5400],[3465.7,6288],[3950.6,7481],[5272.7,9222],[5764.6,10098],[7423.6,12903],[8953.7,15096],[10537.2,16584],[11726.3,18384],[13096.5,20525],[15116.2,22928],[17048.2,24021],[19035.1,27128],[21249.8,29516],[24032.1,31830],[25827.6,32357],[28223.9,36009],[29508.3,37332],[31134.2,38419],[33008.0,38147],[34893.5,41478],[36251.7,43446],[38664.3,45496]],"cat":{"P2P":[524,1956,3492,7765,14701,22744,33201,41153],"Retail":[546,1957,3643,7945,20132,36277,59397,79616],"Utility":[38,211,887,2743,3807,5274,6735,7776]}};const Y=D.Y,S=Object.keys(D.st);
+const P={'jammu & kashmir':[2,0,'JK'],'ladakh':[3,0,'LA'],'punjab':[1,1,'PB'],'himachal pradesh':[2,1,'HP'],'uttarakhand':[3,1,'UK'],'chandigarh':[1,2,'CH'],'haryana':[2,2,'HR'],'delhi':[3,2,'DL'],'uttar pradesh':[4,2,'UP'],'bihar':[5,2,'BR'],'sikkim':[6,2,'SK'],'arunachal pradesh':[7,2,'AR'],'rajasthan':[2,3,'RJ'],'madhya pradesh':[3,3,'MP'],'chhattisgarh':[4,3,'CG'],'jharkhand':[5,3,'JH'],'west bengal':[6,3,'WB'],'assam':[7,3,'AS'],'nagaland':[8,3,'NL'],'gujarat':[1,4,'GJ'],'dadra & nagar haveli & daman & diu':[2,4,'DD'],'maharashtra':[3,4,'MH'],'odisha':[5,4,'OD'],'meghalaya':[7,4,'ML'],'manipur':[8,4,'MN'],'goa':[2,5,'GA'],'karnataka':[3,5,'KA'],'telangana':[4,5,'TS'],'andhra pradesh':[5,5,'AP'],'tripura':[7,5,'TR'],'mizoram':[8,5,'MZ'],'kerala':[3,6,'KL'],'tamil nadu':[4,6,'TN'],'puducherry':[5,6,'PY'],'lakshadweep':[1,7,'LD'],'andaman & nicobar islands':[7,7,'AN']};
+const tot=(k,i)=>S.reduce((a,s)=>a+D.st[s][k][i],0);
+const g=(s,k,i)=>D.st[s][k][i];
+const yoy=(s,k,i)=>i<1||!g(s,k,i-1)?null:g(s,k,i)/g(s,k,i-1)-1;
+const nm=n=>n.replace(/\b\w/g,c=>c.toUpperCase());
+const num=(x,d=1)=>x.toLocaleString('en-IN',{maximumFractionDigits:d});
+const cnt=m=>m>=1000?num(m/1000,1)+' B':num(m,m<10?1:0)+' M';
+const val=b=>b>=1000?'₹'+num(b/1000,1)+' lakh cr':'₹'+num(b*100,0)+' cr';
+const usr=k=>k>=1000?num(k/1000,1)+' M':num(k,0)+' K';
+const pct=x=>(x>=0?'+':'')+num(x*100,0)+'%';
+const M=[
+['Total payments','Number of payments made in the year',(s,i)=>g(s,0,i),cnt],
+['Total payment value','Money moved through the app in the year',(s,i)=>g(s,1,i),val],
+['Registered users','People registered by the end of the year',(s,i)=>g(s,2,i)||null,usr],
+['Average payment size','Value divided by number of payments',(s,i)=>g(s,0,i)?g(s,1,i)*1000/g(s,0,i):null,x=>'₹'+num(x,0)],
+['Payments per registered user','How often the average user paid in a year',(s,i)=>g(s,2,i)?g(s,0,i)*1000/g(s,2,i):null,x=>num(x,0)],
+['Value per registered user','Rupees moved per registered user',(s,i)=>g(s,2,i)?g(s,1,i)*1e6/g(s,2,i):null,x=>'₹'+num(x,0)],
+['Growth in payments (year over year)','How much volume grew versus the year before',(s,i)=>yoy(s,0,i),pct],
+['Growth in value (year over year)','How much money moved grew versus the year before',(s,i)=>yoy(s,1,i),pct],
+['Share of national payments','Slice of all payments made in the state',(s,i)=>g(s,0,i)/tot(0,i),x=>num(x*100,1)+'%'],
+['Share of national users','Slice of all registered users living in the state',(s,i)=>g(s,2,i)/tot(2,i),x=>num(x*100,1)+'%']];
+const mS=document.getElementById('m'),yS=document.getElementById('y');
+M.forEach((m,i)=>mS.add(new Option(m[0],i)));
+Y.forEach((y,i)=>yS.add(new Option(y,i)));yS.value=Y.length-1;
+let sel='maharashtra';
+function render(){
+ const mi=+mS.value,yi=+yS.value,[t,sb,f,fm]=M[mi];
+ const v={};S.forEach(s=>{const x=f(s,yi);v[s]=x==null||!isFinite(x)?null:x});
+ const ok=S.filter(s=>v[s]!=null).sort((a,b)=>v[b]-v[a]);
+ document.getElementById('mt').textContent=t+', '+Y[yi];
+ document.getElementById('ms').textContent=sb+'. Click a state to explore.';
+ let h='';S.forEach(s=>{const[c,r,a]=P[s],i=ok.indexOf(s),b=i<0?-1:4-Math.floor(i*5/ok.length);
+  const fill=b<0?'var(--na)':'var(--b'+b+')',tx=b>=3?(document.documentElement.dataset.theme==='dark'||matchMedia('(prefers-color-scheme:dark)').matches&&document.documentElement.dataset.theme!=='light'?'#12112a':'#fff'):'var(--ink)';
+  h+=`<g class="t${s===sel?' sel':''}" tabindex="0" role="button" data-s="${s}" aria-label="${nm(s)}: ${v[s]==null?'no data':fm(v[s])}" transform="translate(${c*60},${r*60})"><title>${nm(s)}: ${v[s]==null?'no data':fm(v[s])}</title><rect width="56" height="56" rx="8" fill="${fill}"/><text x="28" y="33" text-anchor="middle" fill="${tx}">${a}</text></g>`});
+ document.getElementById('map').innerHTML=h;
+ const mx=v[ok[0]]||1;
+ document.getElementById('rank').innerHTML=ok.slice(0,10).map(s=>`<div class="row"><span>${nm(s).replace(' & Nagar Haveli & Daman & Diu','…')}</span><div><div class="bar" style="width:${Math.max(2,Math.abs(v[s])/Math.abs(mx)*100)}%"></div></div><b>${fm(v[s])}</b></div>`).join('');
+ kpi(yi);detail(mi,yi,f,fm,v);trend(yi);
+}
+function kpi(i){
+ const c=tot(0,i),a=tot(1,i),u=tot(2,i),p=i?c/tot(0,i-1)-1:null,cg=i?Math.pow(c/tot(0,0),1/i)-1:null;
+ const K=[[cnt(c),'payments in '+Y[i]],[val(a),'value moved'],[usr(u),'registered users'],['₹'+num(a*1000/c,0),'average payment'],[p==null?'–':pct(p),'payment growth vs '+(Y[i]-1)],[cg==null?'–':pct(cg)+' a year','compound growth since 2018']];
+ document.getElementById('kpis').innerHTML=K.map(k=>`<div class="k"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
+}
+function detail(mi,yi,f,fm,v){
+ const s=sel,c=g(s,0,yi),a=g(s,1,yi),u=g(s,2,yi),y=Y[yi];
+ document.getElementById('dt').textContent=nm(s)+' in '+y;
+ const gr=yoy(s,0,yi),rk=S.slice().sort((x,z)=>g(z,0,yi)-g(x,0,yi)).indexOf(s)+1;
+ document.getElementById('dp').innerHTML=c?`People here made <b>${cnt(c)}</b> payments worth <b>${val(a)}</b>, ranking <b>#${rk}</b> of ${S.length} for volume. ${u?`That works out to about <b>${num(c*1000/u,0)}</b> payments for every registered user, at around <b>₹${num(a*1000/c,0)}</b> a payment.`:''} ${gr==null?'':`Volume grew <b>${pct(gr)}</b> on the year before.`}`:'No payments recorded for this year.';
+ const vals=Y.map((_,i)=>f(s,i)),ok=vals.filter(x=>x!=null&&isFinite(x)),lo=Math.min(...ok,0),hi=Math.max(...ok)||1;
+ const X=i=>20+i*(360/(Y.length-1)),Yp=x=>70-(x-lo)/(hi-lo||1)*55;
+ let d='',dots='';vals.forEach((x,i)=>{if(x==null||!isFinite(x))return;d+=(d?'L':'M')+X(i)+' '+Yp(x);dots+=`<circle cx="${X(i)}" cy="${Yp(x)}" r="${i===yi?5:2.5}" fill="${i===yi?'var(--acc)':'var(--b3)'}"/>`});
+ document.getElementById('spark').innerHTML=`<path d="${d}" fill="none" stroke="var(--b3)" stroke-width="2.5"/>${dots}<text x="20" y="88" font-size="11" fill="var(--mut)">${Y[0]}</text><text x="380" y="88" font-size="11" text-anchor="end" fill="var(--mut)">${Y[Y.length-1]}</text><text x="200" y="12" font-size="11" text-anchor="middle" fill="var(--mut)">${M[mi][0]}, ${nm(s)}, over time</text>`;
+}
+function trend(yi){
+ const n=D.nat,mx=Math.max(...n.map(q=>q[0])),w=1000/n.length;
+ let h='';n.forEach((q,i)=>{const yr=2018+Math.floor(i/4),H=q[0]/mx*170,hi=yr===Y[yi],qq=i%4+1;
+  h+=`<rect x="${i*w+3}" y="${190-H}" width="${w-6}" height="${H}" rx="2" fill="${hi?'var(--acc)':'var(--b2)'}"><title>${yr} Q${qq}: ${num(q[0]/1000,2)} B payments, ${val(q[1])}</title></rect>`;
+  if(qq===1)h+=`<text x="${i*w+3}" y="212" font-size="12" fill="var(--mut)">${yr}</text>`});
+ const l=n.length-1,gq=n[l][0]/n[l-4][0]-1;
+ h+=`<text x="1000" y="16" text-anchor="end" font-size="13" fill="var(--ink)">Latest quarter (Apr–Jun 2026): ${num(n[l][0]/1000,1)} B payments, ${pct(gq)} on a year earlier</text>`;
+ document.getElementById('trend').innerHTML=h;
+}
+const mapEl=document.getElementById('map');
+mapEl.addEventListener('click',e=>{const t=e.target.closest('.t');if(t){sel=t.dataset.s;render()}});
+mapEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const t=e.target.closest('.t');if(t){e.preventDefault();sel=t.dataset.s;render();mapEl.querySelector('.sel').focus()}}});
+mS.onchange=yS.onchange=render;render();
+</script></body></html>
